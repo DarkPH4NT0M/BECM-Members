@@ -10,7 +10,7 @@
             margin: 0;
             padding: 20px;
             background: url('bg.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background-size: cover; /* Ensures the image covers the entire background */
             color: #fff; /* Set text color to white */
         }
         h1, h2 {
@@ -29,6 +29,7 @@
             padding: 10px;
             border: 1px solid #ddd;
             text-align: left;
+            position: relative; /* Needed for positioning the hover image */
         }
         th {
             background-color: rgba(0, 0, 0, 0.7);
@@ -36,6 +37,18 @@
         }
         tr:nth-child(even) {
             background-color: rgba(255, 255, 255, 0.9);
+        }
+        .hover-image {
+            display: none; /* Hide images by default */
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 100px; /* Adjust size as needed */
+            border: 1px solid #ddd;
+            z-index: 1;
+        }
+        td:hover .hover-image {
+            display: block; /* Show image on hover */
         }
     </style>
 </head>
@@ -76,6 +89,14 @@
 
                     const nameCell = document.createElement('td');
                     nameCell.textContent = fullName;
+
+                    // Add the hover image
+                    const hoverImage = document.createElement('img');
+                    hoverImage.src = `images/${roll}.jpg`;
+                    hoverImage.alt = fullName;
+                    hoverImage.className = 'hover-image';
+                    nameCell.appendChild(hoverImage);
+
                     row.appendChild(nameCell);
 
                     const fbCell = document.createElement('td');
@@ -87,6 +108,20 @@
                     row.appendChild(fbCell);
 
                     nameList.appendChild(row);
+
+                    // Add touch event listeners for mobile devices
+                    nameCell.addEventListener('touchstart', () => {
+                        hoverImage.style.display = 'block';
+                    });
+                    nameCell.addEventListener('touchend', () => {
+                        hoverImage.style.display = 'none';
+                    });
+                    nameCell.addEventListener('touchcancel', () => {
+                        hoverImage.style.display = 'none';
+                    });
+                    nameCell.addEventListener('touchleave', () => {
+                        hoverImage.style.display = 'none';
+                    });
                 });
             } catch (error) {
                 console.error('Error fetching names:', error);
