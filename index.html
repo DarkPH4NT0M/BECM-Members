@@ -70,7 +70,7 @@
     <script>
         async function fetchNames() {
             try {
-                const response = await fetch('BECM Info.txt');
+                const response = await fetch('Info.txt');
                 const text = await response.text();
                 const names = text.split('\n').map(name => name.trim()).filter(name => name);
                 const nameList = document.getElementById('nameList');
