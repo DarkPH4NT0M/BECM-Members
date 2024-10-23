@@ -10,38 +10,51 @@
             margin: 0;
             padding: 20px;
             background: url('bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
+            background-size: cover; /* Ensures the image covers the entire background */
+            color: #fff; /* Set text color to white */
         }
         h1, h2 {
             text-align: center;
-            color: #fff;
+            color: #fff; /* Set heading colors to white */
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            color: #fff;
+            color: #fff; /* Set table text color to white */
         }
         th, td {
             background-color: rgba(255, 255, 255, 0.8);
-            color: #333;
+            color: #333; /* Set table cell text color to a contrasting color for readability */
             padding: 10px;
             border: 1px solid #ddd;
             text-align: left;
+            position: relative; /* Needed for positioning the hover image */
         }
         th {
             background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
+            color: #fff; /* Set table header text color to white */
         }
         tr:nth-child(even) {
             background-color: rgba(255, 255, 255, 0.9);
+        }
+        .hover-image {
+            display: none; /* Hide images by default */
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 100px; /* Adjust size as needed */
+            border: 1px solid #ddd;
+            z-index: 1;
+        }
+        td:hover .hover-image {
+            display: block; /* Show image on hover */
         }
     </style>
 </head>
 <body>
     <h1>DEPARTMENT OF Building Engineering and Construction Management, RUET</h1>
-    <h2>Student Informations</h2>
+    <h2>Student Informatoins</h2>
     <table>
         <thead>
             <tr>
