@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Names</title>
+    <title>Student Informations</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,7 +54,7 @@
 </head>
 <body>
     <h1>DEPARTMENT OF Building Engineering and Construction Management, RUET</h1>
-    <h2>Student Informatoins</h2>
+    <h2>Student Informations</h2>
     <table>
         <thead>
             <tr>
@@ -91,6 +91,14 @@
                     // Name column
                     const nameCell = document.createElement('td');
                     nameCell.textContent = fullName;
+
+                    // Add the hover image
+                    const hoverImage = document.createElement('img');
+                    hoverImage.src = `images/${roll}.jpg`;
+                    hoverImage.alt = fullName;
+                    hoverImage.className = 'hover-image';
+                    nameCell.appendChild(hoverImage);
+
                     row.appendChild(nameCell);
 
                     // College column
@@ -100,6 +108,20 @@
 
                     // Append the row to the table
                     nameList.appendChild(row);
+
+                    // Add touch event listeners for mobile devices
+                    nameCell.addEventListener('touchstart', () => {
+                        hoverImage.style.display = 'block';
+                    });
+                    nameCell.addEventListener('touchend', () => {
+                        hoverImage.style.display = 'none';
+                    });
+                    nameCell.addEventListener('touchcancel', () => {
+                        hoverImage.style.display = 'none';
+                    });
+                    nameCell.addEventListener('touchleave', () => {
+                        hoverImage.style.display = 'none';
+                    });
                 });
             } catch (error) {
                 console.error('Error fetching names:', error);
