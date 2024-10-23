@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Informations</title>
+    <title>Student Information</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,7 +54,7 @@
 </head>
 <body>
     <h1>DEPARTMENT OF Building Engineering and Construction Management, RUET</h1>
-    <h2>Student Informations</h2>
+    <h2>Student Information</h2>
     <table>
         <thead>
             <tr>
@@ -72,23 +72,20 @@
             try {
                 const response = await fetch('BECM Info.txt');
                 const text = await response.text();
-                const names = text.split('\n').map(line => line.trim()).filter(line => line);
-
+                const names = text.split('\n').map(name => name.trim()).filter(name => name);
                 const nameList = document.getElementById('nameList');
 
-                names.forEach(entry => {
-                    const [rollAndName, college] = entry.split(',');
-                    const [roll, ...nameParts] = rollAndName.split(' ');
-                    const fullName = nameParts.join(' ');
+                names.forEach(name => {
+                    const [roll, rest] = name.split(',', 2);
+                    const fullName = rest.trim().split(',')[0].trim();
+                    const collegeName = rest.trim().split(',')[1].trim();
 
                     const row = document.createElement('tr');
 
-                    // Roll number column
                     const rollCell = document.createElement('td');
                     rollCell.textContent = roll;
                     row.appendChild(rollCell);
 
-                    // Name column
                     const nameCell = document.createElement('td');
                     nameCell.textContent = fullName;
 
@@ -101,12 +98,10 @@
 
                     row.appendChild(nameCell);
 
-                    // College column
                     const collegeCell = document.createElement('td');
-                    collegeCell.textContent = college;
+                    collegeCell.textContent = collegeName;
                     row.appendChild(collegeCell);
 
-                    // Append the row to the table
                     nameList.appendChild(row);
 
                     // Add touch event listeners for mobile devices
