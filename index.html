@@ -54,7 +54,7 @@
 </head>
 <body>
     <h1>DEPARTMENT OF Building Engineering and Construction Management, RUET</h1>
-    <h2>Student Informations</h2>
+    <h2>Student Information</h2>
     <table>
         <thead>
             <tr>
@@ -70,39 +70,37 @@
     <script>
         async function fetchNames() {
             try {
-                const response = await fetch('Info.txt');
+                const response = await fetch('info.csv');
                 const text = await response.text();
-                const names = text.split('\n').map(name => name.trim()).filter(name => name);
+                const rows = text.split('\n').map(row => row.trim()).filter(row => row);
                 const nameList = document.getElementById('nameList');
 
-                names.forEach(name => {
-                    const [roll, rest] = name.split(',', 2);
-                    const fullName = rest.trim().split(',')[0].trim();
-                    const collegeName = rest.trim().split(',')[1].trim();
+                rows.forEach(row => {
+                    const [roll, name, college] = row.split(',').map(item => item.trim());
 
-                    const row = document.createElement('tr');
+                    const tableRow = document.createElement('tr');
 
                     const rollCell = document.createElement('td');
                     rollCell.textContent = roll;
-                    row.appendChild(rollCell);
+                    tableRow.appendChild(rollCell);
 
                     const nameCell = document.createElement('td');
-                    nameCell.textContent = fullName;
+                    nameCell.textContent = name;
 
                     // Add the hover image
                     const hoverImage = document.createElement('img');
-                    hoverImage.src = `images/${roll}.jpg`;
-                    hoverImage.alt = fullName;
+                    hoverImage.src = `images/${roll}.jpg`; // Assuming images are named by roll number
+                    hoverImage.alt = name;
                     hoverImage.className = 'hover-image';
                     nameCell.appendChild(hoverImage);
 
-                    row.appendChild(nameCell);
+                    tableRow.appendChild(nameCell);
 
                     const collegeCell = document.createElement('td');
-                    collegeCell.textContent = collegeName;
-                    row.appendChild(collegeCell);
+                    collegeCell.textContent = college;
+                    tableRow.appendChild(collegeCell);
 
-                    nameList.appendChild(row);
+                    nameList.appendChild(tableRow);
 
                     // Add touch event listeners for mobile devices
                     nameCell.addEventListener('touchstart', () => {
