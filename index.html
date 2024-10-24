@@ -10,45 +10,45 @@
             margin: 0;
             padding: 20px;
             background: url('bg.jpg') no-repeat center center fixed;
-            background-size: cover; /* Ensures the image covers the entire background */
-            color: #fff; /* Set text color to white */
+            background-size: cover;
+            color: #fff;
         }
         h1, h2 {
             text-align: center;
-            color: #fff; /* Set heading colors to white */
+            color: #fff;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            color: #fff; /* Set table text color to white */
+            color: #fff;
         }
         th, td {
             background-color: rgba(255, 255, 255, 0.8);
-            color: #333; /* Set table cell text color to a contrasting color for readability */
+            color: #333;
             padding: 10px;
             border: 1px solid #ddd;
             text-align: left;
-            position: relative; /* Needed for positioning the hover image */
+            position: relative;
         }
         th {
             background-color: rgba(0, 0, 0, 0.7);
-            color: #fff; /* Set table header text color to white */
+            color: #fff;
         }
         tr:nth-child(even) {
             background-color: rgba(255, 255, 255, 0.9);
         }
         .hover-image {
-            display: none; /* Hide images by default */
+            display: none;
             position: absolute;
             top: 0;
             left: 100%;
-            width: 100px; /* Adjust size as needed */
+            width: 100px;
             border: 1px solid #ddd;
             z-index: 1;
         }
         td:hover .hover-image {
-            display: block; /* Show image on hover */
+            display: block;
         }
     </style>
 </head>
@@ -61,46 +61,52 @@
                 <th>Roll</th>
                 <th>Name</th>
                 <th>College</th>
+                <th>Home District</th>
             </tr>
         </thead>
-        <tbody id="nameList">
-            <!-- Names will be inserted here -->
+        <tbody id="studentList">
+            <!-- Data will be inserted here -->
         </tbody>
     </table>
     <script>
-        async function fetchNames() {
+        async function fetchStudentData() {
             try {
                 const response = await fetch('info.csv');
                 const text = await response.text();
                 const rows = text.split('\n').map(row => row.trim()).filter(row => row);
-                const nameList = document.getElementById('nameList');
+
+                const studentList = document.getElementById('studentList');
 
                 rows.forEach(row => {
-                    const [roll, name, college] = row.split(',').map(item => item.trim());
+                    const [roll, name, college, homeDistrict] = row.split(',');
 
-                    const tableRow = document.createElement('tr');
+                    const tr = document.createElement('tr');
 
                     const rollCell = document.createElement('td');
-                    rollCell.textContent = roll;
-                    tableRow.appendChild(rollCell);
+                    rollCell.textContent = roll.trim();
+                    tr.appendChild(rollCell);
 
                     const nameCell = document.createElement('td');
-                    nameCell.textContent = name;
+                    nameCell.textContent = name.trim();
 
                     // Add the hover image
                     const hoverImage = document.createElement('img');
-                    hoverImage.src = `images/${roll}.jpg`; // Assuming images are named by roll number
-                    hoverImage.alt = name;
+                    hoverImage.src = `images/${roll.trim()}.jpg`;
+                    hoverImage.alt = name.trim();
                     hoverImage.className = 'hover-image';
                     nameCell.appendChild(hoverImage);
 
-                    tableRow.appendChild(nameCell);
+                    tr.appendChild(nameCell);
 
                     const collegeCell = document.createElement('td');
-                    collegeCell.textContent = college;
-                    tableRow.appendChild(collegeCell);
+                    collegeCell.textContent = college.trim();
+                    tr.appendChild(collegeCell);
 
-                    nameList.appendChild(tableRow);
+                    const districtCell = document.createElement('td');
+                    districtCell.textContent = homeDistrict.trim();
+                    tr.appendChild(districtCell);
+
+                    studentList.appendChild(tr);
 
                     // Add touch event listeners for mobile devices
                     nameCell.addEventListener('touchstart', () => {
@@ -117,11 +123,11 @@
                     });
                 });
             } catch (error) {
-                console.error('Error fetching names:', error);
+                console.error('Error fetching student data:', error);
             }
         }
 
-        document.addEventListener('DOMContentLoaded', fetchNames);
+        document.addEventListener('DOMContentLoaded', fetchStudentData);
     </script>
 </body>
 </html>
